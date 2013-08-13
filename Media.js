@@ -76,10 +76,12 @@ var Media = (function () {
         // of a tab for a while, resize the window, and go back to it -
         // http://stackoverflow.com/questions/3485365/how-can-i-force-webkit-to-redraw-repaint-to-propagate-style-changes
         updateRender: function() {
-            var x;
+            var scrollTop = $(window).scrollTop(),
+                x;
             document.body.style.display='none';
             x = document.body.offsetHeight;
             document.body.style.display='block';
+            $(window).scrollTop(scrollTop);
         }
 
     };
