@@ -1,9 +1,5 @@
 /*global $, Media */
 
-// This is a simple module for handling expand/contract elements
-// Relies on the Media.js module to check screen size
-// Animation is handled by css transitions
-
 'use strict';
 
 var Expand = (function () {
@@ -11,7 +7,8 @@ var Expand = (function () {
 
     return {
         settings: {
-            expandToggle: $('.js-expand-toggle')
+            expandToggle: $('.js-expand-toggle'),
+            externalTrigger: $('.js-external-trigger') // Trigger another toggle
         },
 
         init: function() {
@@ -26,6 +23,11 @@ var Expand = (function () {
             s.expandToggle.on('click', function(e) {
                 Expand.triggerActions($(this), e);
             });
+            s.externalTrigger.on('click', function(e) {
+                var item = $($(this).data('trigger'));
+                e.preventDefault();
+                item.trigger('click');
+            });
         },
 
         triggerActions: function(el, e) {
@@ -35,9 +37,9 @@ var Expand = (function () {
                 expandItem = dataExpandItem ? $(dataExpandItem) : expandWrap.children('.js-expand-item'),
                 collapseItem = dataCollapseItem ? $(dataCollapseItem) : null,
                 context = el.data('expand-context') ? el.data('expand-context').split('|') : [''];
-            e.preventDefault();
             e.stopPropagation();
             if (Media.meetsContext(context)) {
+                e.preventDefault();
                 if (collapseItem && collapseItem[0] !== expandItem[0]) {
                     Expand.collapse(collapseItem, collapseItem.closest('.js-expand-wrap'), context);
                 }
@@ -63,6 +65,27 @@ var Expand = (function () {
                 }
                 if (wrap) {
                     wrap.toggleClass('module-is-expanded' + suffix).toggleClass('module-is-collapsed' + suffix);
+                }
+
+            }
+
+        },
+
+        expand: function(item, wrap, context) {
+
+            if (!context) {
+                context = [''];
+            }
+
+            for (var i = 0; i < context.length; i++) {
+
+                var suffix = context[i].length ? '-' + context[i] : '';
+
+                if (item) {
+                    item.addClass('is-expanded' + suffix).removeClass('is-collapsed' + suffix);
+                }
+                if (wrap) {
+                    wrap.addClass('module-is-expanded' + suffix).removeClass('module-is-collapsed' + suffix);
                 }
 
             }
