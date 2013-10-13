@@ -2,7 +2,7 @@
 
 'use strict';
 
-var Nav = (function () {
+var Nav = (function (args) {
     var s;
 
     return {
@@ -14,7 +14,7 @@ var Nav = (function () {
         },
 
         init: function() {
-            s = this.settings;
+            s = $.extend({}, settings, args);
             this.bindUIActions();
         },
 
@@ -60,5 +60,3 @@ var Nav = (function () {
     };
 
 })();
-
-Nav.init();

@@ -4,7 +4,7 @@
 
 // A little module for displaying chosen fields from a group of form fields
 
-var Chosenbox = (function () {
+var Chosenbox = (function (args) {
     var s;
 
     return {
@@ -19,8 +19,9 @@ var Chosenbox = (function () {
         },
 
         init: function() {
-            s = this.settings;
+            s = $.extend({}, settings, args);
             this.bindUIActions();
+            this.showActiveFilters();
         },
 
         bindUIActions: function() {
@@ -28,7 +29,9 @@ var Chosenbox = (function () {
                 Chosenbox.closeOpenPopups(e);
             });
             s.showToggles.on('click', function() {
-                $(this).find('.js-chosenbox-group').toggleClass('is-open').toggleClass('is-closed');
+                if (!$(this).hasClass('is-disabled')) {
+                    $(this).find('.js-chosenbox-group').toggleClass('is-open').toggleClass('is-closed');
+                }
             });
             s.toggles.on('change', function() {
                 Chosenbox.updateBox($(this));
@@ -72,6 +75,19 @@ var Chosenbox = (function () {
             }
         },
 
+        showActiveFilters: function() {
+            s.toggles.each(function() {
+                type = $(this)[0].type.toLowerCase();
+                // Update the box if the element has an option selected
+                if (type === 'select-one' && $(this)[0].selectedIndex) {
+                    Chosenbox.updateBox($(this));
+                }
+                else if (type === 'checkbox' && $(this).prop('checked')) {
+                    Chosenbox.updateBox($(this));
+                }
+            });
+        },
+
         closeOpenPopups: function(e) {
             var el = e.target,
                 closePopup = true;
@@ -93,4 +109,3 @@ var Chosenbox = (function () {
 
     };
 })();
-Chosenbox.init();

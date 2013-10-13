@@ -2,7 +2,7 @@
 
 'use strict';
 
-var PeopleListing = (function () {
+var PeopleListing = (function (args) {
     var s;
 
     return {
@@ -23,7 +23,7 @@ var PeopleListing = (function () {
         },
 
         init: function() {
-            s = this.settings;
+            s = $.extend({}, settings, args);
             this.plotPoints();
             this.countChildren();
             this.bindUIActions();
@@ -216,5 +216,3 @@ var PeopleListing = (function () {
     };
 
 })();
-
-PeopleListing.init();

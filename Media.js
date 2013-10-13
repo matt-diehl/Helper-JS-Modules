@@ -5,7 +5,7 @@
 // This module handles checking that a screensize condition is met
 // and forces the DOM to re-render when the tab is hidden/shown
 
-var Media = (function () {
+var Media = (function (args) {
     var s;
 
     return {
@@ -16,7 +16,7 @@ var Media = (function () {
         },
 
         init: function() {
-            s = this.settings;
+            s = $.extend({}, settings, args);
             this.addVisibilityListener();
             this.bindUIActions();
         },
@@ -87,5 +87,3 @@ var Media = (function () {
     };
 
 })();
-
-Media.init();

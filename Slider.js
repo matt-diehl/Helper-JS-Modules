@@ -4,7 +4,7 @@
 
 // This module handles basic slideshow functionality
 
-var Slider = (function () {
+var Slider = (function (args) {
     var s;
 
     return {
@@ -20,7 +20,7 @@ var Slider = (function () {
         },
 
         init: function() {
-            s = this.settings;
+            s = $.extend({}, settings, args);
             this.buildPager();
             this.chooseRandomSlide();
             this.bindUIActions();
@@ -118,5 +118,3 @@ var Slider = (function () {
 
     };
 })();
-
-Slider.init();

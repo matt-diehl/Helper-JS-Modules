@@ -6,7 +6,7 @@
 // It's appended with javascript to prevent some spambots from getting through it
 // This module provides no validation - that should be handled in another script, as well as on the server
 
-var HumanCheck = (function () {
+var HumanCheck = (function (args) {
     var s;
 
     return {
@@ -15,7 +15,7 @@ var HumanCheck = (function () {
         },
 
         init: function() {
-            s = this.settings;
+            s = $.extend({}, settings, args);
             this.addCheckbox();
         },
 
@@ -25,4 +25,3 @@ var HumanCheck = (function () {
 
     };
 })();
-HumanCheck.init();

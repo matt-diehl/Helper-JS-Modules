@@ -6,7 +6,7 @@
 
 'use strict';
 
-var Dependencies = (function () {
+var Dependencies = (function (args) {
     var s;
 
     return {
@@ -17,7 +17,7 @@ var Dependencies = (function () {
         },
 
         init: function() {
-            s = this.settings;
+            s = $.extend({}, settings, args);
             this.getDependencies();
         },
 
@@ -47,5 +47,3 @@ var Dependencies = (function () {
     };
 
 })();
-
-Dependencies.init();

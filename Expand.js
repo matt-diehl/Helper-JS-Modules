@@ -2,7 +2,7 @@
 
 'use strict';
 
-var Expand = (function () {
+var Expand = (function (args) {
     var s;
 
     return {
@@ -12,7 +12,7 @@ var Expand = (function () {
         },
 
         init: function() {
-            s = this.settings;
+            s = $.extend({}, settings, args);
             this.bindUIActions();
         },
 
@@ -116,5 +116,3 @@ var Expand = (function () {
     };
 
 })();
-
-Expand.init();

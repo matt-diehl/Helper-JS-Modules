@@ -5,7 +5,7 @@
 // This module finds all containers with an image and caption, and sets the appropriate width on the container
 // For it to work properly, set the caption default state to display: none, but display: block when it's parent has the loaded class
 
-var Caption = (function () {
+var Caption = (function (args) {
     var s;
 
     return {
@@ -14,7 +14,7 @@ var Caption = (function () {
         },
 
         init: function() {
-            s = this.settings;
+            s = $.extend({}, settings, args);
             this.formatCaptions();
         },
 
@@ -32,4 +32,3 @@ var Caption = (function () {
 
     };
 })();
-Caption.init();
