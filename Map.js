@@ -23,7 +23,7 @@ var PeopleListing = (function (args) {
         },
 
         init: function() {
-            s = $.extend({}, settings, args);
+            s = $.extend({}, this.settings, args);
             this.plotPoints();
             this.countChildren();
             this.bindUIActions();

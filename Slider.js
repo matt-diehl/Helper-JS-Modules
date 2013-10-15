@@ -20,7 +20,7 @@ var Slider = (function (args) {
         },
 
         init: function() {
-            s = $.extend({}, settings, args);
+            s = $.extend({}, this.settings, args);
             this.buildPager();
             this.chooseRandomSlide();
             this.bindUIActions();

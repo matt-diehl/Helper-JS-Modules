@@ -17,7 +17,7 @@ var Dependencies = (function (args) {
         },
 
         init: function() {
-            s = $.extend({}, settings, args);
+            s = $.extend({}, this.settings, args);
             this.getDependencies();
         },
 
