@@ -11,6 +11,12 @@ var Media = (function (args) {
     return {
         settings: {
             windowWidth: document.body.clientWidth,
+            breakpoints: {
+                small: 320,
+                medium: 675,
+                large: 1000,
+                xlarge: 1215
+            },
             hidden: '',
             visibilitychange: ''
         },
@@ -57,9 +63,9 @@ var Media = (function (args) {
                 s.windowWidth = document.body.clientWidth;
             }
 
-            if (s.windowWidth > 960) {
+            if (s.windowWidth > s.breakpoints.large) {
                 mq = 'mq-large';
-            } else if (s.windowWidth > 675) {
+            } else if (s.windowWidth > s.breakpoints.medium) {
                 mq = 'mq-medium';
             }
 
