@@ -7,7 +7,8 @@ var Expand = (function (args) {
 
     return {
         settings: {
-            expandToggle: $('.js-expand-toggle'),
+            expandToggle: $('.js-expand-toggle'), // Standard expand/collapse toggle
+            expandOnlyToggle: $('.js-expand-only-toggle'), // Only expand, do not collapse
             externalTrigger: $('.js-external-trigger') // Trigger another toggle
         },
 
@@ -22,6 +23,12 @@ var Expand = (function (args) {
         bindUIActions: function() {
             s.expandToggle.on('click', function(e) {
                 Expand.triggerActions($(this), e);
+            });
+            s.expandOnlyToggle.on('click', function(e) {
+                e.preventDefault();
+                if (!$(this).closest('.js-expand-wrap').hasClass('module-is-expanded')) {
+                    Expand.triggerActions($(this), e);
+                }
             });
             s.externalTrigger.on('click', function(e) {
                 var item = $($(this).data('trigger'));

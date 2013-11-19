@@ -1,10 +1,10 @@
 /*global $ */
 
-'use strict';
-
 // A little module for displaying chosen fields from a group of form fields
 
-var Chosenbox = (function (args) {
+'use strict';
+
+var Chosenbox = (function () {
     var s;
 
     return {
@@ -19,7 +19,7 @@ var Chosenbox = (function (args) {
         },
 
         init: function() {
-            s = $.extend({}, this.settings, args);
+            s = this.settings;
             this.bindUIActions();
             this.showActiveFilters();
         },
@@ -61,23 +61,28 @@ var Chosenbox = (function (args) {
         updateBox: function(el) {
             var box = el.closest('.js-chosenbox-wrap').find('.js-chosenbox-items'),
                 choices = [],
+                totalChoices,
                 type = el[0].type.toLowerCase();
+            // If it's a single select, grab the inner html of the selected option
             if (type === 'select-one') {
-                choices.push(el.val());
-                box.removeClass('is-empty').empty().append('<li>' + choices[0] + '<a href="#"" class="chosenbox-remove js-chosenbox-remove">X</a></li>');
+                var selectedIndex = el[0].selectedIndex,
+                    selectedValue = el[0].options[selectedIndex].innerHTML;
+                choices.push(selectedValue);
+                box.removeClass('is-empty').empty().append('<li>' + choices[0] + '<a href="#" class="chosenbox-remove js-chosenbox-remove">X</a></li>');
+            // If it's a checkbox group, grab the inner html of each related label
             } else if (type === 'checkbox') {
                 choices = el.closest('.js-chosenbox-group').find(':checked');
-                totalChoices = choices.length
+                totalChoices = choices.length;
                 box.removeClass('is-empty').empty();
                 for (var i = 0; i < totalChoices; i++) {
-                    box.append('<li>' + choices.eq(i).val() + '<a href="#" data-chosen-remove="#' + choices[i].id + '" class="chosenbox-remove js-chosenbox-remove">X</a></li>');
-                };
+                    box.append('<li>' + choices[i].labels[0].innerHTML + '<a href="#" data-chosen-remove="#' + choices[i].id + '" class="chosenbox-remove js-chosenbox-remove">X</a></li>');
+                }
             }
         },
 
         showActiveFilters: function() {
             s.toggles.each(function() {
-                type = $(this)[0].type.toLowerCase();
+                var type = $(this)[0].type.toLowerCase();
                 // Update the box if the element has an option selected
                 if (type === 'select-one' && $(this)[0].selectedIndex) {
                     Chosenbox.updateBox($(this));
@@ -109,3 +114,4 @@ var Chosenbox = (function (args) {
 
     };
 })();
+Chosenbox.init();
