@@ -24,11 +24,17 @@ var Caption = (function (args) {
                     img = wrap.find('img'),
                     caption = wrap.find('.js-caption-content');
                 img.on('load', function() {
-                    caption[0].style.width = img.width() + 'px';
+                    caption[0].style.maxWidth = img.width() + 'px';
                     wrap.addClass('is-loaded');
+                }).each(function(){
+                    if(this.complete) {
+                        $(this).trigger('load');
+                    }
                 });
             });
         }
 
     };
 })();
+
+Caption.init();

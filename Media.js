@@ -55,19 +55,23 @@ var Media = (function (args) {
 
         },
 
-        meetsContext: function(context) {
-            var meets = false,
-                mq = 'mq-small';
+        getCurrentQuery: function() {
+            var mq = 'mq-small';
 
             if (!s.windowWidth) {
                 s.windowWidth = document.body.clientWidth;
             }
-
             if (s.windowWidth > s.breakpoints.large) {
                 mq = 'mq-large';
             } else if (s.windowWidth > s.breakpoints.medium) {
                 mq = 'mq-medium';
             }
+            return mq;
+        },
+
+        meetsContext: function(context) {
+            var meets = false,
+                mq = Media.getCurrentQuery();
 
             for (var i = 0; i < context.length; i++) {
                 if (context[i] === mq || context[i] === '') {
