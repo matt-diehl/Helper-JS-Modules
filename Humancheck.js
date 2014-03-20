@@ -25,3 +25,5 @@ var HumanCheck = (function (args) {
 
     };
 })();
+
+HumanCheck.init();

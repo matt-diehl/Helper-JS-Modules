@@ -11,7 +11,8 @@ var Expand = (function (args) {
             expandOnlyToggle: $('.js-expand-only-toggle'), // Only expand, do not collapse
             externalTrigger: $('.js-external-trigger'), // Trigger another toggle
             expandRate: 3/5, // pixels/ms
-            isTouch: Modernizr.touch
+            isTouch: Modernizr.touch,
+            cssTransition: null
         },
 
         init: function() {
@@ -41,16 +42,16 @@ var Expand = (function (args) {
         },
 
         getSupportedProp: function(proparray) {
-            var root = document.documentElement
+            var root = document.documentElement;
             for (var i = 0; i < proparray.length; i++){
-                if (typeof root.style[proparray[i]] == 'string'){
-                    return proparray[i]
+                if (typeof root.style[proparray[i]] === 'string'){
+                    return proparray[i];
                 }
             }
         },
 
         getSupportedProps: function() {
-            s.cssTransition = this.getSupportedProp(['transition', 'MozTransition', 'WebkitTransition', 'msTransition', 'OTransition'])
+            s.cssTransition = this.getSupportedProp(['transition', 'MozTransition', 'WebkitTransition', 'msTransition', 'OTransition']);
         },
 
         triggerActions: function(el, e) {
@@ -89,7 +90,7 @@ var Expand = (function (args) {
 
         getTransitionVal: function(height) {
             var transitionTime = height / s.expandRate,
-                transitionVal = 'max-height ' + transitionTime + 'ms linear, padding ' + transitionTime + 'ms linear';
+                transitionVal = 'max-height ' + transitionTime + 'ms linear, margin ' + transitionTime + 'ms linear, padding ' + transitionTime + 'ms linear';
             return transitionVal;
         },
 
@@ -110,7 +111,7 @@ var Expand = (function (args) {
                 transitionVal = Expand.getTransitionVal(expandHeight);
 
             if (item.length) {
-                if (s.cssTransition.length && !s.isTouch) {
+                if (s.cssTransition && !s.isTouch) {
                     item[0].style[s.cssTransition] = transitionVal;
                     item[0].style.overflow = 'hidden';
                     window.setTimeout(function() {
@@ -138,14 +139,14 @@ var Expand = (function (args) {
                 transitionVal = Expand.getTransitionVal(expandHeight);
 
             if (item) {
-                if (s.cssTransition.length && !s.isTouch) {
+                if (s.cssTransition && !s.isTouch) {
                     item[0].style.maxHeight = expandHeight + 'px';
                     item.removeClass(classes[0]);
                     item[0].style[s.cssTransition] = transitionVal;
                     item[0].style.overflow = 'hidden';
                     window.setTimeout(function() {
                         item[0].style.maxHeight = '0px';
-                        item.on('transitionend', function(a) {
+                        item.on('transitionend', function() {
                             item.addClass(classes[1]);
                             item[0].removeAttribute('style');
                             item.off('transitionend');
@@ -164,3 +165,5 @@ var Expand = (function (args) {
     };
 
 })();
+
+Expand.init();
