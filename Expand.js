@@ -11,7 +11,8 @@ var Expand = (function (args) {
             expandOnlyToggle: $('.js-expand-only-toggle'), // Only expand, do not collapse
             externalTrigger: $('.js-external-trigger'), // Trigger another toggle
             expandRate: 3/5, // pixels/ms
-            isTouch: Modernizr.touch
+            isTouch: Modernizr.touch,
+            cssTransition: null
         },
 
         init: function() {
@@ -110,7 +111,7 @@ var Expand = (function (args) {
                 transitionVal = Expand.getTransitionVal(expandHeight);
 
             if (item.length) {
-                if (s.cssTransition.length && !s.isTouch) {
+                if (s.cssTransition && !s.isTouch) {
                     item[0].style[s.cssTransition] = transitionVal;
                     item[0].style.overflow = 'hidden';
                     window.setTimeout(function() {
@@ -138,7 +139,7 @@ var Expand = (function (args) {
                 transitionVal = Expand.getTransitionVal(expandHeight);
 
             if (item.length) {
-                if (s.cssTransition.length && !s.isTouch) {
+                if (s.cssTransition && !s.isTouch) {
                     item[0].style.maxHeight = expandHeight + 'px';
                     item.removeClass(classes[0]);
                     item[0].style[s.cssTransition] = transitionVal;
