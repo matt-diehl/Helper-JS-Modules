@@ -64,7 +64,7 @@ var Expand = (function (args) {
             e.stopPropagation();
             if (Media.meetsContext(context)) {
                 e.preventDefault();
-                if (collapseItem.length && collapseItem[0] !== expandItem[0]) {
+                if (collapseItem && collapseItem.length && collapseItem[0] !== expandItem[0]) {
                     Expand.collapse(collapseItem, collapseItem.closest('.js-expand-wrap'), context);
                 }
                 if (expandItem) {
