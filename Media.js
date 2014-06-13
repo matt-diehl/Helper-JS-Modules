@@ -23,35 +23,15 @@ var Media = (function (args) {
 
         init: function() {
             s = $.extend({}, this.settings, args);
-            this.addVisibilityListener();
             this.bindUIActions();
         },
 
         bindUIActions: function() {
             // Rather than constantly calculate width, we'll set it to 0
-            // if the window is resized and calculate again when 'meetsContext' is called.
+            // if the window is resized we'll calculate again when 'meetsContext' is called.
             $(window).on('resize', function() {
                 s.windowWidth = 0;
             });
-
-        },
-
-        addVisibilityListener: function() {
-            var hidden = ['hidden', 'mozHidden', 'webkitHidden', 'msHidden'],
-                visibilitychange = ['visibilitychange', 'mozvisibilitychange', 'webkitvisibilitychange', 'msvisibilitychange'];
-
-            for (var i = 0 - 1; i < hidden.length; i++) {
-                if (hidden[i] in document) {
-                    s.hidden = hidden[i];
-                    s.visibilitychange = visibilitychange[i];
-                }
-            }
-
-            if (s.hidden !== '') {
-                document.addEventListener(s.visibilitychange, Media.updateRender);
-            } else if ('onfocusin' in document) {
-                document.onfocusin = document.onfocusout = Media.updateRender;
-            }
 
         },
 
@@ -80,18 +60,6 @@ var Media = (function (args) {
             }
 
             return meets;
-        },
-
-        // This is a fix for a funny issue where media queries don't take effect if you've been off
-        // of a tab for a while, resize the window, and go back to it -
-        // http://stackoverflow.com/questions/3485365/how-can-i-force-webkit-to-redraw-repaint-to-propagate-style-changes
-        updateRender: function() {
-            var scrollTop = $(window).scrollTop(),
-                x;
-            document.body.style.display='none';
-            x = document.body.offsetHeight;
-            document.body.style.display='block';
-            $(window).scrollTop(scrollTop);
         }
 
     };
